@@ -13,17 +13,17 @@
                   let scene = document.querySelector('a-scene'); /* Apply to whole scene */
 
                   if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(function (position) {
-                      let gps = document.createAttribute('gps-entity-place'),
-                        arjs = document.createAttribute('arjs'),
-                        welcome = document.getElementById('welcome');
+                        navigator.geolocation.getCurrentPosition(function (position) {
+                          let gps = document.createAttribute('gps-entity-place'),
+                            arjs = document.createAttribute('arjs'),
+                            welcome = document.getElementById('welcome');
 
-                      arjs.value = 'sourceType: webcam; sourceWidth: 1280; sourceHeight: 960; trackingMethod: best; debugUIEnabled: false;';
-                      gps.value = `latitude: ${position.coords.latitude - 0.001}; longitude: ${position.coords.longitude + 0.001}`;
-                      log(gps.value);
-                      scene.setAttributeNode(gps); /* Apply to whole scene */
-                      scene.setAttributeNode(arjs);
-                    });
+                          arjs.value = 'sourceType: webcam; sourceWidth: 1280; sourceHeight: 960; trackingMethod: best; debugUIEnabled: false;';
+                          gps.value = `latitude: ${position.coords.latitude - 0.001}; longitude: ${position.coords.longitude + 0.001}`;
+                          log(gps.value);
+                          scene.setAttributeNode(gps); /* Apply to whole scene */
+                          scene.setAttributeNode(arjs);
+                        });
                   }
 
                 };
@@ -41,6 +41,7 @@
                     src="assets/asset.jpeg"
                     look-at="[gps-camera]"
                     scale="1 1 1"
+                    gps-entity-place="latitude: 25.728862399999997; longitude: -100.33890339999999;"
                 ></a-image>
 
             <a-camera gps-camera rotation-reader></a-camera>
