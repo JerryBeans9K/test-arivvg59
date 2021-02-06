@@ -26,10 +26,10 @@
                             //https://stackoverflow.com/questions/60330263/ar-js-is-it-possible-to-update-the-location-of-a-gps-entity-place
                             alert(JSON.stringify(position));
                             const catImage = document.createElement("a-image");
-                            catImage.setAttribute("id","cat-image")
-                            catImage.setAttribute("src","assets/asset.jpeg")
-                            catImage.setAttribute("look-at","[gps-camera]")
-                            catImage.setAttribute("scale","1 1 1")
+                            catImage.setAttribute("id","cat-image");
+                            catImage.setAttribute("src","assets/asset.jpeg");
+                            catImage.setAttribute("look-at","[gps-camera]");
+                            catImage.setAttribute("scale","1 1 1");
                             catImage.setAttribute("gps-entity-place",`latitude: ${position.coords.latitude}; longitude: ${position.coords.longitude};`);
                             scene.appendChild(catImage);
                         });
