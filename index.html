@@ -24,7 +24,16 @@
                           scene.setAttributeNode(gps); /* Apply to whole scene */
                           scene.setAttributeNode(arjs);
                         });
-                  }
+
+                        const catImage = document.createElement("a-image");
+                        catImage.id = "cat-image";
+                        catImage.setAttribute("src","assets/asset.jpeg");
+                        catImage.setAttribute("look-at","[gps-camera]");
+                        catImage.setAttribute("scale","1 1 1");
+                        catImage.setAttribute("gps-entity-place",`latitude: ${position.coords.latitude - 0.001}; longitude: ${position.coords.longitude + 0.001};`);
+
+                        scene.append(catImage);
+                    }
 
                 };
           </script>
@@ -36,13 +45,13 @@
             loading-screen="enabled: false;"
             arjs="sourceType: webcam; debugUIEnabled: false;"
         >
-                <a-image
+<!--                 <a-image
                     id="cat-image"
                     src="assets/asset.jpeg"
                     look-at="[gps-camera]"
                     scale="1 1 1"
                     gps-entity-place="latitude: 25.728862399999997; longitude: -100.33890339999999;"
-                ></a-image>
+                ></a-image> -->
 
             <a-camera gps-camera rotation-reader></a-camera>
         </a-scene>
