@@ -33,6 +33,14 @@
                             catImage.setAttribute("scale","1 1 1");
                             catImage.setAttribute("gps-entity-place",`latitude: ${position.coords.latitude}; longitude: ${position.coords.longitude};`);
                             scene.appendChild(catImage);
+
+                            const sceneText = document.createElement("a-text");
+                            sceneText.setAttribute("value","This content will always face you.");
+                            sceneText.setAttribute("look-at","[gps-camera]");
+                            sceneText.setAttribute("scale","120 120 120");
+                            sceneText.setAttribute("gps-entity-place",`latitude: ${position.coords.latitude}; longitude: ${position.coords.longitude};`);
+
+                            scene.appendChild(sceneText);
                         });
                     }
 
@@ -46,7 +54,6 @@
             loading-screen="enabled: false;"
             arjs="sourceType: webcam; debugUIEnabled: false;"
         >
-
             <a-camera gps-camera rotation-reader></a-camera>
         </a-scene>
     </body>
