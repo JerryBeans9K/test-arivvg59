@@ -16,7 +16,7 @@
                         navigator.geolocation.getCurrentPosition(function (position) {
                             let gps = document.createAttribute('gps-entity-place');
 
-                            gps.value = `latitude: ${position.coords.latitude - 0.001}; longitude: ${position.coords.longitude + 0.001};`;
+                            gps.value = `latitude: ${position.coords.latitude}; longitude: ${position.coords.longitude};`;
                             //log(gps.value);
                             scene.setAttributeNode(gps); /* Apply to whole scene */
 
@@ -28,7 +28,8 @@
                             catImage.setAttribute("look-at","[gps-camera]");
                             //catImage.setAttribute('rotation', '0 0 90');
                             catImage.setAttribute("scale","1 1 1");
-                            catImage.setAttribute("gps-entity-place",`latitude: ${position.coords.latitude}; longitude: ${position.coords.longitude};`);
+                            catImage.setAttribute("position","0 0 0");
+                            //catImage.setAttribute("gps-entity-place",`latitude: ${position.coords.latitude}; longitude: ${position.coords.longitude};`);
                             scene.appendChild(catImage);
 
                             scene.appendChild(sceneText);
