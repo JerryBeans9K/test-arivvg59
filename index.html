@@ -19,12 +19,19 @@
                                 welcome = document.getElementById('welcome');
 
                             arjs.value = 'sourceType: webcam; sourceWidth: 1280; sourceHeight: 960; trackingMethod: best; debugUIEnabled: false;';
-                            gps.value = `latitude: ${position.coords.latitude - 0.001}; longitude: ${position.coords.longitude + 0.001}`;
+                            gps.value = `latitude: ${position.coords.latitude - 0.001}; longitude: ${position.coords.longitude + 0.001};`;
                             log(gps.value);
                             scene.setAttributeNode(gps); /* Apply to whole scene */
                             scene.setAttributeNode(arjs);
 
                             //https://stackoverflow.com/questions/60330263/ar-js-is-it-possible-to-update-the-location-of-a-gps-entity-place
+                            const catImage = document.createElement("a-image");
+                            catImage.setAttribute("id","cat-image")
+                            catImage.setAttribute("src","assets/asset.jpeg")
+                            catImage.setAttribute("look-at","[gps-camera]")
+                            catImage.setAttribute("scale","1 1 1")
+                            catImage.setAttribute("gps-entity-place",`latitude: ${position.coords.latitude}; longitude: ${position.coords.longitude};`);
+                            scene.appendChild(catImage);
                         });
                     }
 
@@ -38,13 +45,13 @@
             loading-screen="enabled: false;"
             arjs="sourceType: webcam; debugUIEnabled: false;"
         >
-                <a-image
+<!--                 <a-image
                     id="cat-image"
                     src="assets/asset.jpeg"
                     look-at="[gps-camera]"
                     scale="1 1 1"
-                    position="0 0 0"
-                ></a-image>
+                    gps-entity-place="latitude: 20.728862399999997; longitude: -90.33890339999999;"
+                ></a-image> -->
 
             <a-camera gps-camera rotation-reader></a-camera>
         </a-scene>
