@@ -6,6 +6,28 @@
         <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
         <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
         <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+    
+            <script>
+                const log = console.log;
+                window.onload = () => {
+                  let scene = document.querySelector('a-scene'); /* Apply to whole scene */
+
+                  if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function (position) {
+                      let gps = document.createAttribute('gps-entity-place'),
+                        arjs = document.createAttribute('arjs'),
+                        welcome = document.getElementById('welcome');
+
+                      arjs.value = 'sourceType: webcam; sourceWidth: 1280; sourceHeight: 960; trackingMethod: best; debugUIEnabled: false;';
+                      gps.value = `latitude: ${position.coords.latitude - 0.001}; longitude: ${position.coords.longitude + 0.001}`;
+                      log(gps.value);
+                      scene.setAttributeNode(gps); /* Apply to whole scene */
+                      scene.setAttributeNode(arjs);
+                    });
+                  }
+
+                };
+          </script>
     </head>
 
     <body style="margin: 0; overflow: hidden;">
@@ -25,16 +47,4 @@
             <a-camera gps-camera rotation-reader></a-camera>
         </a-scene>
     </body>
-
-    <script>
-        document.onload = function(){
-            navigator.geolocation.getCurrentPosition(showPosition); 
-        }
-
-        function setPosition(position){
-            const lat = position.coords.latitude;
-            const lng = position.coords.longitude;
-            document.getElementById("cat-image").attribute("gps-entity-place", `latitude: ${lat}; longitude: ${lng};`);
-        }
-    </script>
 </html>
