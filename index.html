@@ -14,14 +14,11 @@
 
                   if (navigator.geolocation) {
                         navigator.geolocation.getCurrentPosition(function (position) {
-                            //let gps = document.createAttribute('gps-entity-place');
-                            //let arjs = document.createAttribute('arjs');
+                            let gps = document.createAttribute('gps-entity-place');
 
-                            //arjs.value = 'sourceType: webcam; sourceWidth: 1280; sourceHeight: 960; trackingMethod: best; debugUIEnabled: false;';
-                            //gps.value = `latitude: ${position.coords.latitude - 0.001}; longitude: ${position.coords.longitude + 0.001};`;
+                            gps.value = `latitude: ${position.coords.latitude - 0.001}; longitude: ${position.coords.longitude + 0.001};`;
                             //log(gps.value);
-                            //scene.setAttributeNode(gps); /* Apply to whole scene */
-                            //scene.setAttributeNode(arjs);
+                            scene.setAttributeNode(gps); /* Apply to whole scene */
 
                             //https://stackoverflow.com/questions/60330263/ar-js-is-it-possible-to-update-the-location-of-a-gps-entity-place
                             alert(JSON.stringify(`latitude: ${position.coords.latitude}; longitude: ${position.coords.longitude};`));
@@ -33,12 +30,6 @@
                             catImage.setAttribute("scale","1 1 1");
                             catImage.setAttribute("gps-entity-place",`latitude: ${position.coords.latitude}; longitude: ${position.coords.longitude};`);
                             scene.appendChild(catImage);
-
-                            const sceneText = document.createElement("a-text");
-                            sceneText.setAttribute("value","This content will always face you.");
-                            sceneText.setAttribute("look-at","[gps-camera]");
-                            sceneText.setAttribute("scale","120 120 120");
-                            sceneText.setAttribute("gps-entity-place",`latitude: ${position.coords.latitude}; longitude: ${position.coords.longitude};`);
 
                             scene.appendChild(sceneText);
                         });
