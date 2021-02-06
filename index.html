@@ -15,6 +15,7 @@
             arjs="sourceType: webcam; debugUIEnabled: false;"
         >
                 <a-image
+                    id="cat-image"
                     src="assets/asset.jpeg"
                     look-at="[gps-camera]"
                     scale="1 1 1"
@@ -24,4 +25,16 @@
             <a-camera gps-camera rotation-reader></a-camera>
         </a-scene>
     </body>
+
+    <script>
+        document.onload = function(){
+            navigator.geolocation.getCurrentPosition(showPosition); 
+        }
+
+        function setPosition(position){
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+            document.getElementById("cat-image").attribute("gps-entity-place", `latitude: ${lat}; longitude: ${lng}`);
+        }
+    </script>
 </html>
