@@ -21,11 +21,13 @@
   </head>
 
   <body>
+      <select id="camera-selector">
+      </select>
         <div style="height: 0; width:0">
             <video style="visibility: hidden;" id="video" width="640" height="480" controls="true" crossorigin="anonymous"/>
         </div>
-        <div class="container">
-            <canvas id="c1" width="640" height="480"></canvas>
+        <div style="height: 0; width:0" class="container">
+            <canvas style="visibility: hidden;" id="c1" width="640" height="480"></canvas>
         </div>
         <div class="container">
             <canvas id="c2" width="640" height="480"></canvas>
