@@ -24,7 +24,7 @@ function startCamera() {
     width = 320,
     height = 0;
 
-    let videoSettings = frontFacing?{facingMode: { exact: "environment" }}:{facingMode: "user"};
+    let videoFacingSettings = frontFacing?{facingMode: { exact: "environment" }}:{facingMode: "user"};
   
     navigator.getMedia = ( navigator.getUserMedia ||
                            navigator.webkitGetUserMedia ||
@@ -33,7 +33,12 @@ function startCamera() {
   
     navigator.getMedia(
       {
-        video: videoSettings,
+        video: {
+            width: { ideal: 1920 },
+            height: { ideal: 1080 },
+            frameRate: { min: 8, max:30 },
+            ...videoFacingSettings
+        },
         audio: false
       },
       function(stream) {
@@ -100,8 +105,8 @@ let processor = {
       let self = this;
       this.video.addEventListener("play", function() {
           setTimeout(function(){
-            self.width = self.video.videoWidth;
-            self.height = self.video.videoHeight;
+            self.width = window.innerWidth;//self.video.videoWidth;
+            self.height = window.innerHeight;//self.video.videoHeight;
             self.timerCallback();
           }, 1000)
         }, false);
@@ -119,12 +124,37 @@ let processor = {
             if (g > 150 && r < 100 && b < 100)
                 frame.data[i * 4 + 3] = 0;
         }
-        this.ctx2.putImageData(frame, 0, 0);
+        this.ctx2.putImageData(frame,0,0);
         return;
     }
   };
 
 document.addEventListener("DOMContentLoaded", () => {
+    let c1 = document.getElementById("c1");
+    let ctx1 = c1.getContext("2d");
+    let c2 = document.getElementById("c2");
+    let ctx2 = c2.getContext("2d");
+    let video = document.getElementById("video");
+
+    if(window.innerHeight > window.innerWidth){
+    }
+    else
+    {
+    }
+
+    video.width = window.innerWidth;
+    video.height = window.innerHeight;
+
+    ctx1.width = window.innerWidth;
+    ctx1.height = window.innerHeight;
+    ctx2.width = window.innerWidth;
+    ctx2.height = window.innerHeight;
+    
+    c1.width = window.innerWidth;
+    c1.height = window.innerHeight;
+    c2.width = window.innerWidth;
+    c2.height = window.innerHeight;
+
     startCamera(frontFacing);
     processor.doLoad();
 });
