@@ -7,7 +7,7 @@
         color:#CCCCCC;
       }
       #c2 {
-        background-image: url(assets/foo.png);
+        background-image: url(assets/sample.jpg);
         background-repeat: no-repeat;
       }
       div {
@@ -22,11 +22,11 @@
 
   <body>
     <div>
-      <video id="video" src="assets/video.mp4" controls="true" crossorigin="anonymous"/>
+      <video style="visibility: hidden;" id="video" width="640" height="480" controls="true" crossorigin="anonymous"/>
     </div>
     <div>
-      <canvas id="c1" width="160" height="96"></canvas>
-      <canvas id="c2" width="160" height="96"></canvas>
+      <canvas id="c1" width="640" height="480"></canvas>
+      <canvas id="c2" width="640" height="480"></canvas>
     </div>
     <script src="js/chroma.js"></script>
   </body>
