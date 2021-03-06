@@ -1,101 +1,42 @@
-window.ck= (function(_d){
-    
-    var _video= _d.getElementById('video'),
-        _canvas= _d.getElementById('canvas'),
-        _ctx= _canvas.getContext('2d'),
-        _n= navigator,
-        _w= window,
-        _width= 0,
-        _height= 0,
-        _tmpCtx     = _d.createElement('canvas'),
-        _range      = 80,
-        _colors     = [0, 0, 200];
-    
-    _tmpCtx.width= _canvas.offsetWidth;
-    _tmpCtx.height= _canvas.offsetHeight;
-    
-    _tmpCtx= _tmpCtx.getContext('2d');
-    
-    var _videoPlaying= function(event){
-        
-        var frame= '',
-            data= null,
-            l,
-            r, g, b;
-        
-        if(!_width){
-            _width= _video.offsetWidth;
-            _height= _video.offsetHeight;
-        }
-        
-        _tmpCtx.drawImage(_video, 0, 0, _width, _height);
-        
-        frame= _tmpCtx.getImageData(0, 0, _width, _height);
-        data= frame.data;
-        
-        l= data.length/4;
-        while(l--){
-            r= data[l*4];
-            g= data[l*4+1];
-            b= data[l*4+2];
-            
-            if(Math.abs(r-_colors[0]) < 250-_range
-                &&
-               Math.abs(g-_colors[1]) < 250-_range
-                &&
-               Math.abs(b-_colors[2]) < 250-_range)
-            {
-                frame.data[l*4+3]= 0;
-            }
-            
-        }
-        
-        _ctx.putImageData(frame, 0, 0);
-    };
-    
-    var _videoClick= function(evt){
-        var line= evt.offsetY,
-            col= evt.offsetX,
-            frame= _ctx.getImageData(col, line, 1, 1),
-            px= [frame.data[0], frame.data[1], frame.data[2]];
-        _colors= px;
-    };
-    
-    var _constructor= function(){
-        _w.URL= _w.URL || _w.webkitURL;
-        _n.getUserMedia= _n.getUserMedia||_n.webkitGetUserMedia||_n.mozGetUserMedia||false;
-        
-        if(_n.getUserMedia){
-            _n.getUserMedia({
-                audio: false,
-                video: true
-            }, function(stream){
-                try{
-                    stream= _w.URL.createObjectURL(stream);
-                }catch(e){
-                }
-                
-                _video.src= stream;
-                _video.play();
-                
-                _canvas.addEventListener('click', _videoClick);
-                setInterval(_videoPlaying, 120);
-                _video.style.visibility= 'hidden';
-                
-                _d.getElementById('range').addEventListener('change', function(){
-                    _range= 255 - this.value;
-                });
-                
-            }, function(){
-                //alert('nao permitiu');
-            });
-        }else{
-            alert('falhou');
-        }
-        
+var processor;
+
+processor.doLoad = function doLoad() {
+this.video = document.getElementById('video');
+this.c1 = document.getElementById('c1');
+this.ctx1 = this.c1.getContext('2d');
+this.c2 = document.getElementById('c2');
+this.ctx2 = this.c2.getContext('2d');
+let self = this;
+this.video.addEventListener('play', function() {
+    self.width = self.video.videoWidth / 2;
+    self.height = self.video.videoHeight / 2;
+    self.timerCallback();
+    }, false);
+};
+
+processor.timerCallback = function timerCallback() {
+    if (this.video.paused || this.video.ended) {
+      return;
     }
-    
-    return {
-        start: _constructor
-    };
-})(document);
+    this.computeFrame();
+    let self = this;
+    setTimeout(function() {
+        self.timerCallback();
+      }, 0);
+};
+
+processor.computeFrame = function computeFrame() {
+    this.ctx1.drawImage(this.video, 0, 0, this.width, this.height);
+    let frame = this.ctx1.getImageData(0, 0, this.width, this.height);
+    let l = frame.data.length / 4;
+
+    for (let i = 0; i < l; i++) {
+      let r = frame.data[i * 4 + 0];
+      let g = frame.data[i * 4 + 1];
+      let b = frame.data[i * 4 + 2];
+      if (g > 100 && r > 100 && b < 43)
+        frame.data[i * 4 + 3] = 0;
+    }
+    this.ctx2.putImageData(frame, 0, 0);
+    return;
+}
