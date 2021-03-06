@@ -1,8 +1,30 @@
+let cameraToggle = document.getElementById("camera-toggle");
+let frontFacing = false;
+
+/*
+function gotDevices(mediaDevices) {
+    select.innerHTML = '';
+    select.appendChild(document.createElement('option'));
+    let count = 1;
+    mediaDevices.forEach(mediaDevice => {
+      if (mediaDevice.kind === 'videoinput') {
+        const option = document.createElement('option');
+        option.value = mediaDevice.deviceId;
+        const label = mediaDevice.label || `Camera ${count++}`;
+        const textNode = document.createTextNode(label);
+        option.appendChild(textNode);
+        select.appendChild(option);
+      }
+    });
+}*/
+
 function startCamera() {
     var streaming = false,
     video        = document.querySelector('#video'),
     width = 320,
     height = 0;
+
+    let videoSettings = frontFacing?{facingMode: { exact: "environment" }}:{facingMode: "user"};
   
     navigator.getMedia = ( navigator.getUserMedia ||
                            navigator.webkitGetUserMedia ||
@@ -11,7 +33,7 @@ function startCamera() {
   
     navigator.getMedia(
       {
-        video: true,
+        video: videoSettings,
         audio: false
       },
       function(stream) {
@@ -51,6 +73,11 @@ function startCamera() {
         ev.preventDefault();
     }, false); */
 };
+
+function stopCamera(){
+    let video = document.querySelector('#video');
+    video.pause();
+}
 
 let processor = {
     timerCallback: function() {
@@ -98,6 +125,12 @@ let processor = {
   };
 
 document.addEventListener("DOMContentLoaded", () => {
-    startCamera();
+    startCamera(frontFacing);
     processor.doLoad();
 });
+
+cameraToggle.addEventListener("click", ()=>{
+    frontFacing = !frontFacing;
+    stopCamera();
+    startCamera();
+}, false);
