@@ -1,4 +1,4 @@
-var processor;
+var processor = {};
 
 processor.doLoad = function doLoad() {
 this.video = document.getElementById('video');
