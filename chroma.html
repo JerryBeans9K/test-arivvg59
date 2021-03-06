@@ -10,7 +10,7 @@
         background-image: url(assets/sample.jpg);
         background-repeat: no-repeat;
       }
-      div {
+      div.container {
         float: left;
         border :1px solid #444444;
         padding:10px;
@@ -21,14 +21,16 @@
   </head>
 
   <body>
-    <div>
-      <video style="visibility: hidden;" id="video" width="640" height="480" controls="true" crossorigin="anonymous"/>
-    </div>
-    <div>
-      <canvas id="c1" width="640" height="480"></canvas>
-      <canvas id="c2" width="640" height="480"></canvas>
-    </div>
-    <script src="js/chroma.js"></script>
+        <div style="height: 0; width:0">
+            <video style="visibility: hidden;" id="video" width="640" height="480" controls="true" crossorigin="anonymous"/>
+        </div>
+        <div class="container">
+            <canvas id="c1" width="640" height="480"></canvas>
+        </div>
+        <div class="container">
+            <canvas id="c2" width="640" height="480"></canvas>
+        </div>
+        <script src="js/chroma.js"></script>
   </body>
 
 </html>
