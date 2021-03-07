@@ -3,7 +3,7 @@ let takePhoto = document.getElementById("take-photo");
 let frontFacing = false;
 let bgImage = document.getElementById("bg-image");
 
-navigator.mediaDevices.enumerateDevices(gotDevices);
+navigator.mediaDevices.enumerateDevices().then(gotDevices);
 
 function gotDevices(mediaDevices) {
     console.log(mediaDevices);
