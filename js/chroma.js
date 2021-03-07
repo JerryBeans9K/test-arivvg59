@@ -23,7 +23,7 @@ function startCamera() {
     //let videoFacingSettings = frontFacing?{facingMode: "environment"}:{facingMode: "user"};
   
     let videoFacingSettings = {deviceId: {
-                                    exact: frontFacing?cameras[0]:cameras[1],
+                                    exact: /* frontFacing?cameras[0]: */cameras[1],
                                 }};
 
     navigator.getMedia = ( navigator.getUserMedia ||
@@ -42,7 +42,6 @@ function startCamera() {
         audio: false
       },
       function(stream) {
-        navigator.mediaDevices.enumerateDevices().then(gotDevices);
         if (navigator.mozGetUserMedia) {
           video.mozSrcObject = stream;
         } else {
@@ -132,6 +131,7 @@ let processor = {
   };
 
 document.addEventListener("DOMContentLoaded", () => {
+    navigator.mediaDevices.enumerateDevices().then(gotDevices);
     let c1 = document.getElementById("c1");
     let ctx1 = c1.getContext("2d");
     let c2 = document.getElementById("c2");
