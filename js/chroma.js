@@ -22,7 +22,7 @@ function startCamera() {
     //let videoFacingSettings = frontFacing?{facingMode: "environment"}:{facingMode: "user"};
   
     let videoFacingSettings = {deviceId: {
-                                    exact: frontFacing?cameras[0]:cameras[1],
+                                    exact: frontFacing?cameras[1]:cameras[0],
                                 }};
 
     navigator.getMedia = ( navigator.getUserMedia ||
