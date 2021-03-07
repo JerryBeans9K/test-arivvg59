@@ -3,9 +3,11 @@ let takePhoto = document.getElementById("take-photo");
 let frontFacing = false;
 let bgImage = document.getElementById("bg-image");
 
-/*
+navigator.mediaDevices.getUserMedia(gotDevices);
+
 function gotDevices(mediaDevices) {
-    select.innerHTML = '';
+    console.log(mediaDevices);
+/*     select.innerHTML = '';
     select.appendChild(document.createElement('option'));
     let count = 1;
     mediaDevices.forEach(mediaDevice => {
@@ -17,8 +19,8 @@ function gotDevices(mediaDevices) {
         option.appendChild(textNode);
         select.appendChild(option);
       }
-    });
-}*/
+    }); */
+}
 
 function startCamera() {
     var streaming = false,
