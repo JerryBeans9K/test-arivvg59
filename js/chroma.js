@@ -1,4 +1,5 @@
 let cameraToggle = document.getElementById("camera-toggle");
+let takePhoto = document.getElementById("take-photo");
 let frontFacing = false;
 
 /*
@@ -121,7 +122,7 @@ let processor = {
             let r = frame.data[i * 4 + 0];
             let g = frame.data[i * 4 + 1];
             let b = frame.data[i * 4 + 2];
-            if (g > 150 && r < 100 && b < 100)
+            if (g > 128 && r < 100 && b < 100)
                 frame.data[i * 4 + 3] = 0;
         }
         this.ctx2.putImageData(frame,0,0);
@@ -155,7 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
     c2.width = window.innerWidth;
     c2.height = window.innerHeight;
 
-    startCamera(frontFacing);
+    startCamera();
     processor.doLoad();
 });
 
@@ -164,3 +165,14 @@ cameraToggle.addEventListener("click", ()=>{
     stopCamera();
     startCamera();
 }, false);
+
+takePhoto.addEventListener("click", ()=>{
+    let c2 = document.getElementById("c2");
+    let dataURL = c2.toDataURL();
+    
+    let link = document.createElement('a');
+    link.download = 'filename.png';
+    link.href = dataURL;
+    link.click();    
+});
+
