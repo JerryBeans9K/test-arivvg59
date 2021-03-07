@@ -1,6 +1,6 @@
 let cameraToggle = document.getElementById("camera-toggle");
 let takePhoto = document.getElementById("take-photo");
-let frontFacing = true;
+let frontFacing = false;
 let bgImage = document.getElementById("bg-image");
 let cameras = [];
 let currentStream = null;
