@@ -26,7 +26,7 @@ function startCamera() {
     width = 320,
     height = 0;
 
-    let videoFacingSettings = frontFacing?{facingMode: { exact: "environment" }}:{facingMode: "user"};
+    let videoFacingSettings = frontFacing?{facingMode: "environment"}:{facingMode: "user"};
   
     navigator.getMedia = ( navigator.getUserMedia ||
                            navigator.webkitGetUserMedia ||
@@ -181,6 +181,7 @@ takePhoto.addEventListener("click", ()=>{
     let c2 = document.getElementById("c2");
 
     ctxCapture.drawImage(bgImage, 0, 0);
+    //ctxCapture.rotate(45*Math.PI/180);
     ctxCapture.drawImage(c2, 0, 0);
 
     let dataURL = cCapture.toDataURL();
