@@ -1,8 +1,9 @@
 let cameraToggle = document.getElementById("camera-toggle");
 let takePhoto = document.getElementById("take-photo");
-let frontFacing = false;
+let frontFacing = true;
 let bgImage = document.getElementById("bg-image");
 let cameras = [];
+let currentStream = null;
 
 function gotDevices(mediaDevices) {
     cameras = [];
@@ -14,17 +15,23 @@ function gotDevices(mediaDevices) {
     console.log(cameras);
 }
 
+function stopMediaTracks(stream) {
+    stream.getTracks().forEach(track => {
+      track.stop();
+    });
+  }
+
 function startCamera() {
     var streaming = false,
     video        = document.querySelector('#video'),
     width = 320,
     height = 0;
 
-    //let videoFacingSettings = frontFacing?{facingMode: "environment"}:{facingMode: "user"};
+    let videoFacingSettings = frontFacing?{facingMode: "environment"}:{facingMode: "user"};
   
-    let videoFacingSettings = {deviceId: {
-                                    exact: /* frontFacing?cameras[0]: */cameras[1],
-                                }};
+    /* let videoFacingSettings = {deviceId: {
+                                    exact: frontFacing? cameras[0]: cameras[1],
+                                }}; */
 
     navigator.getMedia = ( navigator.getUserMedia ||
                            navigator.webkitGetUserMedia ||
@@ -42,6 +49,7 @@ function startCamera() {
         audio: false
       },
       function(stream) {
+          currentStream = stream;
         if (navigator.mozGetUserMedia) {
           video.mozSrcObject = stream;
         } else {
@@ -82,6 +90,8 @@ function startCamera() {
 function stopCamera(){
     let video = document.querySelector('#video');
     video.pause();
+    stopMediaTracks(currentStream);
+    currentStream = null;
 }
 
 let processor = {
