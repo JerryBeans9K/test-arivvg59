@@ -4,23 +4,7 @@ let frontFacing = false;
 let bgImage = document.getElementById("bg-image");
 let cameras = [];
 
-navigator.mediaDevices.enumerateDevices().then(gotDevices);
-
 function gotDevices(mediaDevices) {
-    //console.log(mediaDevices);
-/*     select.innerHTML = '';
-    select.appendChild(document.createElement('option'));
-    let count = 1;
-    mediaDevices.forEach(mediaDevice => {
-      if (mediaDevice.kind === 'videoinput') {
-        const option = document.createElement('option');
-        option.value = mediaDevice.deviceId;
-        const label = mediaDevice.label || `Camera ${count++}`;
-        const textNode = document.createTextNode(label);
-        option.appendChild(textNode);
-        select.appendChild(option);
-      }
-    }); */
     mediaDevices.forEach(mediaDevice => {
         if (mediaDevice.kind === 'videoinput') {
             cameras.push(mediaDevice.deviceId);
@@ -57,6 +41,7 @@ function startCamera() {
         audio: false
       },
       function(stream) {
+        navigator.mediaDevices.enumerateDevices().then(gotDevices);
         if (navigator.mozGetUserMedia) {
           video.mozSrcObject = stream;
         } else {
