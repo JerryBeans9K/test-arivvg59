@@ -1,6 +1,7 @@
 let cameraToggle = document.getElementById("camera-toggle");
 let takePhoto = document.getElementById("take-photo");
 let frontFacing = false;
+let bgImage = document.getElementById("bg-image");
 
 /*
 function gotDevices(mediaDevices) {
@@ -125,6 +126,7 @@ let processor = {
             if (g > 128 && r < 100 && b < 100)
                 frame.data[i * 4 + 3] = 0;
         }
+        this.ctx2.drawImage(bgImage,0,0);
         this.ctx2.putImageData(frame,0,0);
         return;
     }
@@ -135,13 +137,15 @@ document.addEventListener("DOMContentLoaded", () => {
     let ctx1 = c1.getContext("2d");
     let c2 = document.getElementById("c2");
     let ctx2 = c2.getContext("2d");
+    let cCapture = document.getElementById("c-capture");
+    let ctxCapture = cCapture.getContext("2d");
     let video = document.getElementById("video");
 
-    if(window.innerHeight > window.innerWidth){
+    /* if(window.innerHeight > window.innerWidth){
     }
     else
     {
-    }
+    } */
 
     video.width = window.innerWidth;
     video.height = window.innerHeight;
@@ -150,11 +154,15 @@ document.addEventListener("DOMContentLoaded", () => {
     ctx1.height = window.innerHeight;
     ctx2.width = window.innerWidth;
     ctx2.height = window.innerHeight;
+    ctxCapture.width = window.innerWidth;
+    ctxCapture.height = window.innerHeight;
     
     c1.width = window.innerWidth;
     c1.height = window.innerHeight;
     c2.width = window.innerWidth;
     c2.height = window.innerHeight;
+    cCapture.width = window.innerWidth;
+    cCapture.height = window.innerHeight;
 
     startCamera();
     processor.doLoad();
@@ -167,12 +175,20 @@ cameraToggle.addEventListener("click", ()=>{
 }, false);
 
 takePhoto.addEventListener("click", ()=>{
+    let cCapture = document.getElementById("c-capture");
+    let ctxCapture = cCapture.getContext("2d");
+
     let c2 = document.getElementById("c2");
-    let dataURL = c2.toDataURL();
+
+    ctxCapture.drawImage(bgImage, 0, 0);
+    ctxCapture.drawImage(c2, 0, 0);
+
+    let dataURL = cCapture.toDataURL();
     
     let link = document.createElement('a');
-    link.download = 'filename.png';
+    link.download = "foto.png";
     link.href = dataURL;
-    link.click();    
+    link.click();
+    link.remove();
 });
 
