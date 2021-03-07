@@ -27,7 +27,7 @@ function startCamera() {
     width = 320,
     height = 0;
 
-    let videoFacingSettings = frontFacing?{facingMode: "environment"}:{facingMode: "user"};
+    let videoFacingSettings = frontFacing?{facingMode: "user"}:{facingMode: "environment"};
   
     /* let videoFacingSettings = {deviceId: {
                                     exact: frontFacing? cameras[0]: cameras[1],
