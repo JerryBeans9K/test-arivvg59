@@ -5,6 +5,7 @@ let bgImage = document.getElementById("bg-image");
 let cameras = [];
 
 function gotDevices(mediaDevices) {
+    cameras = [];
     mediaDevices.forEach(mediaDevice => {
         if (mediaDevice.kind === 'videoinput') {
             cameras.push(mediaDevice.deviceId);
@@ -22,7 +23,7 @@ function startCamera() {
     //let videoFacingSettings = frontFacing?{facingMode: "environment"}:{facingMode: "user"};
   
     let videoFacingSettings = {deviceId: {
-                                    exact: frontFacing?cameras[1]:cameras[0],
+                                    exact: frontFacing?cameras[0]:cameras[1],
                                 }};
 
     navigator.getMedia = ( navigator.getUserMedia ||
