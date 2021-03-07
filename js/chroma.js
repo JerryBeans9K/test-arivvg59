@@ -2,11 +2,12 @@ let cameraToggle = document.getElementById("camera-toggle");
 let takePhoto = document.getElementById("take-photo");
 let frontFacing = false;
 let bgImage = document.getElementById("bg-image");
+let cameras = [];
 
 navigator.mediaDevices.enumerateDevices().then(gotDevices);
 
 function gotDevices(mediaDevices) {
-    console.log(mediaDevices);
+    //console.log(mediaDevices);
 /*     select.innerHTML = '';
     select.appendChild(document.createElement('option'));
     let count = 1;
@@ -20,6 +21,12 @@ function gotDevices(mediaDevices) {
         select.appendChild(option);
       }
     }); */
+    mediaDevices.forEach(mediaDevice => {
+        if (mediaDevice.kind === 'videoinput') {
+            cameras.push(mediaDevice.deviceId);
+        }
+    });
+    console.log(cameras);
 }
 
 function startCamera() {
@@ -28,8 +35,12 @@ function startCamera() {
     width = 320,
     height = 0;
 
-    let videoFacingSettings = frontFacing?{facingMode: "environment"}:{facingMode: "user"};
+    //let videoFacingSettings = frontFacing?{facingMode: "environment"}:{facingMode: "user"};
   
+    let videoFacingSettings = {deviceId: {
+                                    exact: frontFacing?cameras[0]:cameras[1],
+                                }};
+
     navigator.getMedia = ( navigator.getUserMedia ||
                            navigator.webkitGetUserMedia ||
                            navigator.mozGetUserMedia ||
