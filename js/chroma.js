@@ -232,7 +232,7 @@ btnTakeVideo.addEventListener("click", ()=>{
 function record(canvas)
 {
     videoStream = canvas.captureStream(30);
-    mediaRecorder = new MediaRecorder(videoStream);
+    mediaRecorder = new MediaRecorder(videoStream, { 'type' : 'video/webm;codecs=vp9' });
     chunks = [];
     mediaRecorder.ondataavailable = function(e) {
         chunks.push(e.data);
