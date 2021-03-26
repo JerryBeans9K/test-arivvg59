@@ -239,7 +239,7 @@ function record(canvas)
         var videoURL = URL.createObjectURL(blob);
 
         let link = document.createElement('a');
-        link.download = "foto.png";
+        link.download = "video.mp4";
         link.href = videoURL;
         link.click();
         link.remove();
