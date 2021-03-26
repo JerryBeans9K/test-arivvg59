@@ -11,6 +11,9 @@ let videoStream = null;
 let mediaRecorder = null;
 let chunks = null;
 
+let cCapture = document.getElementById("c-capture");
+let ctxCapture = cCapture.getContext("2d");
+
 function gotDevices(mediaDevices) {
     cameras = [];
     mediaDevices.forEach(mediaDevice => {
@@ -142,6 +145,9 @@ let processor = {
         }
         this.ctx2.drawImage(bgImage,0,0);
         this.ctx2.putImageData(frame,0,0);
+
+        ctxCapture.drawImage(bgImage, 0, 0);
+        ctxCapture.drawImage(this.c2, 0, 0);
         return;
     }
   };
