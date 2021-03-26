@@ -227,7 +227,6 @@ function record(canvas)
 {
     videoStream = canvas.captureStream(30);
     mediaRecorder = new MediaRecorder(videoStream);
-    mediaRecorder.start();
     chunks = [];
     mediaRecorder.ondataavailable = function(e) {
         chunks.push(e.data);
@@ -244,5 +243,7 @@ function record(canvas)
         link.click();
         link.remove();
     };
+
+    mediaRecorder.start();
 }
 
