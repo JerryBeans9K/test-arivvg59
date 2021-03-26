@@ -1,9 +1,15 @@
 let cameraToggle = document.getElementById("camera-toggle");
-let takePhoto = document.getElementById("take-photo");
+let btnTakePhoto = document.getElementById("take-photo");
+let btnTakeVideo = document.getElementById("take-video");
 let frontFacing = false;
 let bgImage = document.getElementById("bg-image");
 let cameras = [];
 let currentStream = null;
+
+let isRecording = false;
+let videoStream = null;
+let mediaRecorder = null;
+let chunks = null;
 
 function gotDevices(mediaDevices) {
     cameras = [];
@@ -183,7 +189,7 @@ cameraToggle.addEventListener("click", ()=>{
     startCamera();
 }, false);
 
-takePhoto.addEventListener("click", ()=>{
+btnTakePhoto.addEventListener("click", ()=>{
     let cCapture = document.getElementById("c-capture");
     let ctxCapture = cCapture.getContext("2d");
 
@@ -201,4 +207,42 @@ takePhoto.addEventListener("click", ()=>{
     link.click();
     link.remove();
 });
+
+btnTakeVideo.addEventListener("click", ()=>{
+    isRecording = !isRecording;
+    
+    if(isRecording)
+    {
+        let cCapture = document.getElementById("c-capture");
+        record(cCapture);
+    }
+    else
+    {
+        mediaRecorder.stop();
+    }
+        
+});
+
+function record(canvas)
+{
+    videoStream = canvas.captureStream(30);
+    mediaRecorder = new MediaRecorder(videoStream);
+    mediaRecorder.start();
+    chunks = [];
+    mediaRecorder.ondataavailable = function(e) {
+        chunks.push(e.data);
+    };
+
+    mediaRecorder.onstop = function(e) {
+        var blob = new Blob(chunks, { 'type' : 'video/mp4' }); // other types are available such as 'video/webm' for instance, see the doc for more info
+        chunks = [];
+        var videoURL = URL.createObjectURL(blob);
+
+        let link = document.createElement('a');
+        link.download = "foto.png";
+        link.href = videoURL;
+        link.click();
+        link.remove();
+    };
+}
 
