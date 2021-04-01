@@ -164,28 +164,31 @@ document.addEventListener("DOMContentLoaded", () => {
     let ctxCapture = cCapture.getContext("2d");
     let video = document.getElementById("video");
 
+    let calculatedWidth = window.innerWidth;
+    let calculatedHeight = window.innerHeight;
+
     /* if(window.innerHeight > window.innerWidth){
     }
     else
     {
-    } */
+    } */   
 
-    video.width = window.innerWidth;
-    video.height = window.innerHeight;
+    video.width = calculatedWidth;
+    video.height = calculatedHeight;
 
-    ctx1.width = window.innerWidth;
-    ctx1.height = window.innerHeight;
-    ctx2.width = window.innerWidth;
-    ctx2.height = window.innerHeight;
-    ctxCapture.width = window.innerWidth;
-    ctxCapture.height = window.innerHeight;
+    ctx1.width = calculatedWidth;
+    ctx1.height = calculatedHeight;
+    ctx2.width = calculatedWidth;
+    ctx2.height = calculatedHeight;
+    ctxCapture.width = calculatedWidth;
+    ctxCapture.height = calculatedHeight;
     
-    c1.width = window.innerWidth;
-    c1.height = window.innerHeight;
-    c2.width = window.innerWidth;
-    c2.height = window.innerHeight;
-    cCapture.width = window.innerWidth;
-    cCapture.height = window.innerHeight;
+    c1.width = calculatedWidth;
+    c1.height = calculatedHeight;
+    c2.width = calculatedWidth;
+    c2.height = calculatedHeight;
+    cCapture.width = calculatedWidth;
+    cCapture.height = calculatedHeight;
 
     startCamera();
     processor.doLoad();
