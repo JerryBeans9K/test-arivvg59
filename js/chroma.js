@@ -250,7 +250,7 @@ function record(canvas)
         ysFixWebmDuration(blob, elapsedTime, function(fixedBlob) {
             var videoURL = URL.createObjectURL(fixedBlob);
             let link = document.createElement('a');
-            link.download = "video.mp4";
+            link.download = "video.webm";
             link.href = videoURL;
             link.click();
             link.remove();
