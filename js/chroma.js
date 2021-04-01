@@ -14,6 +14,8 @@ let chunks = null;
 let cCapture = document.getElementById("c-capture");
 let ctxCapture = cCapture.getContext("2d");
 
+let recordingStartTimestamp = 0;
+
 function gotDevices(mediaDevices) {
     cameras = [];
     mediaDevices.forEach(mediaDevice => {
@@ -219,6 +221,7 @@ btnTakeVideo.addEventListener("click", ()=>{
     
     if(isRecording)
     {
+        recordingStartTimestamp = Date.now();
         let cCapture = document.getElementById("c-capture");
         record(cCapture);
     }
@@ -239,15 +242,25 @@ function record(canvas)
     };
 
     mediaRecorder.onstop = function(e) {
-        var blob = new Blob(chunks, { 'type' : 'video/mp4' }); // other types are available such as 'video/webm' for instance, see the doc for more info
+        //var blob = new Blob(chunks, { 'type' : 'video/mp4' }); // other types are available such as 'video/webm' for instance, see the doc for more info
+        var blob = new Blob(chunks, { 'type' : 'video/webm;codecs=vp9' }); 
+        let elapsedTime = Date.now() - recordingStartTimestamp;
         chunks = [];
-        var videoURL = URL.createObjectURL(blob);
 
+        ysFixWebmDuration(blob, elapsedTime, function(fixedBlob) {
+            var videoURL = URL.createObjectURL(fixedBlob);
+            let link = document.createElement('a');
+            link.download = "video.webm";
+            link.href = videoURL;
+            link.click();
+            link.remove();
+        });
+        /* var videoURL = URL.createObjectURL(blob);
         let link = document.createElement('a');
         link.download = "video.mp4";
         link.href = videoURL;
         link.click();
-        link.remove();
+        link.remove(); */
     };
 
     mediaRecorder.start();
