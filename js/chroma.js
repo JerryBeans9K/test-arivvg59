@@ -163,10 +163,10 @@ function initCanvases(width, height)
     let ctx2 = c2.getContext("2d");
     let cCapture = document.getElementById("c-capture");
     let ctxCapture = cCapture.getContext("2d");
-    let video = document.getElementById("video");
+    //let video = document.getElementById("video");
 
-    video.width = width;
-    video.height = height;
+    //video.width = width;
+    //video.height = height;
 
     ctx1.width = width;
     ctx1.height = height;
